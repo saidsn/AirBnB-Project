@@ -19,7 +19,7 @@ const Home = async ({ searchParams }: HomeProps) => {
         <EmptyState showReset />
       </ClientOnly>
     );
-  }
+  };
 
   
   return (
