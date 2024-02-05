@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
