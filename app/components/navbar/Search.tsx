@@ -108,14 +108,7 @@ const Search = () => {
             gap-3
           "
         >
-          <div
-            className="
-              hidden
-              sm:block
-              "
-          >
-            {guestLabel}
-          </div>
+          <div className="hidden sm:block">{guestLabel}</div>
           <div
             className="
               p-2 

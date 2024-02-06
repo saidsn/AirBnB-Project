@@ -1,7 +1,8 @@
-import getCurrentUser from "./getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
-const getFavoriteListings = async () => {
+import getCurrentUser from "./getCurrentUser";
+
+export default async function getFavoriteListings() {
   try {
     const currentUser = await getCurrentUser();
 
@@ -19,13 +20,11 @@ const getFavoriteListings = async () => {
 
     const safeFavorites = favorites.map((favorite) => ({
       ...favorite,
-      createdAt: favorite.createdAt.toISOString(),
+      createdAt: favorite.createdAt.toString(),
     }));
 
     return safeFavorites;
   } catch (error: any) {
     throw new Error(error);
   }
-};
-
-export default getFavoriteListings;
+}

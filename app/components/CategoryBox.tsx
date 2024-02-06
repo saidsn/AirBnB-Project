@@ -1,17 +1,17 @@
 "use client";
-import { IconType } from "react-icons";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { useCallback } from "react";
-import qs from "query-string";
 
-type CategoriesItemProps = {
+import qs from "query-string";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
+import { IconType } from "react-icons";
+
+interface CategoryBoxProps {
   icon: IconType;
   label: string;
   selected?: boolean;
-};
+}
 
-const CategoriesItem: React.FC<CategoriesItemProps> = ({
+const CategoryBox: React.FC<CategoryBoxProps> = ({
   icon: Icon,
   label,
   selected,
@@ -19,8 +19,9 @@ const CategoriesItem: React.FC<CategoriesItemProps> = ({
   const router = useRouter();
   const params = useSearchParams();
 
-  const handleClicked = useCallback(() => {
+  const handleClick = useCallback(() => {
     let currentQuery = {};
+
     if (params) {
       currentQuery = qs.parse(params.toString());
     }
@@ -33,41 +34,40 @@ const CategoriesItem: React.FC<CategoriesItemProps> = ({
     if (params?.get("category") === label) {
       delete updatedQuery.category;
     }
+
     const url = qs.stringifyUrl(
       {
         url: "/",
         query: updatedQuery,
       },
-      {
-        skipNull: true,
-      }
+      { skipNull: true }
     );
 
     router.push(url);
-  }, [label, params, router]);
+  }, [label, router, params]);
 
   return (
     <div
-      onClick={handleClicked}
+      onClick={handleClick}
       className={`
-        flex
-        flex-col
-        items-center
-        justify-center
+        flex 
+        flex-col 
+        items-center 
+        justify-center 
         gap-2
         p-3
         border-b-2
         hover:text-neutral-800
-        transition 
+        transition
         cursor-pointer
-        ${selected ? "border-b-neutral-800" : "border-tarnsparent"}
+        ${selected ? "border-b-neutral-800" : "border-transparent"}
         ${selected ? "text-neutral-800" : "text-neutral-500"}
-        `}
+      `}
     >
       <Icon size={26} />
-      <div className="font-medium text-sm ">{label}</div>
+      <div className="font-medium text-sm">{label}</div>
     </div>
   );
 };
 
-export default CategoriesItem;
+export default CategoryBox;

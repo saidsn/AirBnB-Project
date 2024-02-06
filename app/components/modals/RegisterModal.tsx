@@ -115,12 +115,12 @@ const RegisterModal = () => {
           <span
             onClick={onToggle}
             className="
-              ml-1
               text-neutral-800
               cursor-pointer 
               hover:underline
             "
           >
+            {" "}
             Log in
           </span>
         </p>

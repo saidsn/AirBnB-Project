@@ -2,13 +2,13 @@
 
 import { IconType } from "react-icons";
 
-interface ListingCategoryProps {
+interface CategoryViewProps {
   icon: IconType;
   label: string;
   description: string;
 }
 
-const ListingCategory: React.FC<ListingCategoryProps> = ({
+const CategoryView: React.FC<CategoryViewProps> = ({
   icon: Icon,
   label,
   description,
@@ -26,4 +26,4 @@ const ListingCategory: React.FC<ListingCategoryProps> = ({
   );
 };
 
-export default ListingCategory;
+export default CategoryView;

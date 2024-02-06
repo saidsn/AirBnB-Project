@@ -61,7 +61,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         <div
           onClick={toggleOpen}
           className="
-          ok
           p-4
           md:py-1
           md:px-2
@@ -123,20 +122,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               </>
             ) : (
               <>
-                <MenuItem
-                  label="Login"
-                  onClick={() => {
-                    loginModal.onOpen();
-                    setIsOpen(!isOpen);
-                  }}
-                />
-                <MenuItem
-                  label="Sign up"
-                  onClick={() => {
-                    registerModal.onOpen();
-                    setIsOpen(!isOpen);
-                  }}
-                />
+                <MenuItem label="Login" onClick={loginModal.onOpen} />
+                <MenuItem label="Sign up" onClick={registerModal.onOpen} />
               </>
             )}
           </div>

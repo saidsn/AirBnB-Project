@@ -1,12 +1,16 @@
 "use client";
-import useCountries from "@/app/hooks/useCountries";
-import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
+
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
-import Image from "next/image";
-import HeartBUtton from "../HeartBUtton";
+
+import useCountries from "@/app/hooks/useCountries";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
+
+import HeartButton from "../HeartButton";
 import Button from "../Button";
+import ClientOnly from "../ClientOnly";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -32,17 +36,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   const location = getByValue(data.locationValue);
 
-  console.log(location?.label);
-
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
 
-      if (disabled) return;
+      if (disabled) {
+        return;
+      }
 
       onAction?.(actionId);
     },
-    [onAction, disabled, actionId]
+    [disabled, onAction, actionId]
   );
 
   const price = useMemo(() => {
@@ -58,50 +62,68 @@ const ListingCard: React.FC<ListingCardProps> = ({
       return null;
     }
 
-    const startDate = new Date(reservation.startDate);
-    const endDate = new Date(reservation.endDate);
+    const start = new Date(reservation.startDate);
+    const end = new Date(reservation.endDate);
 
-    return `${format(startDate, "PP")} - ${format(endDate, "PP")}`;
+    return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, [reservation]);
 
   return (
     <div
+      onClick={() => router.push(`/listings/${data.id}`)}
       className="col-span-1 cursor-pointer group"
-      onClick={() => {
-        router.push(`/listings/${data.id}`);
-      }}
     >
       <div className="flex flex-col gap-2 w-full">
-        <div className="aspect-square w-full relative rounded-xl overflow-hidden">
+        <div
+          className="
+            aspect-square 
+            w-full 
+            relative 
+            overflow-hidden 
+            rounded-xl
+          "
+        >
           <Image
-            className="object-cover h-full w-full group-hover:scale-125 transition duration-500"
             fill
-            alt="Listing image"
+            className="
+              object-cover 
+              h-full 
+              w-full 
+              group-hover:scale-110 
+              transition
+            "
             src={data.imageSrc}
+            alt="Listing"
           />
-          <div className="absolute top-3 right-3">
-            <HeartBUtton listingId={data.id} currentUser={currentUser} />
+          <div
+            className="
+            absolute
+            top-3
+            right-3
+          "
+          >
+            <HeartButton listingId={data.id} currentUser={currentUser} />
           </div>
         </div>
+        <div className="font-semibold text-lg">
+          {location?.region}, {location?.label}
+        </div>
+        <div className="font-light text-neutral-500">
+          {reservationDate || data.category}
+        </div>
+        <div className="flex flex-row items-center gap-1">
+          <div className="font-semibold">$ {price}</div>
+          {!reservation && <div className="font-light">night</div>}
+        </div>
+        {onAction && actionLabel && (
+          <Button
+            disabled={disabled}
+            small
+            label={actionLabel}
+            onClick={handleCancel}
+          />
+        )}
       </div>
-      <div className="font-semibold text-lg">
-        {location?.region}, {location?.label}
-      </div>
-      <div className="font-light text-neutral-500">
-        {reservationDate || data.category}
-      </div>
-      <div className="flex flex-row items-center gap-1">
-        <div className="font-semibold">${price}</div>
-        {reservation && <div className="font-light">night</div>}
-      </div>
-      {onAction && actionLabel && (
-        <Button
-          disabled={disabled}
-          small
-          label={actionLabel}
-          onClick={handleCancel}
-        />
-      )}
     </div>
   );
 };

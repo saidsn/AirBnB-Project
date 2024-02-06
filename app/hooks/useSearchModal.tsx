@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-interface SerachModalStore {
+interface SearchModalStore {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
-const useSearchModal = create<SerachModalStore>((set) => ({
+const useSearchModal = create<SearchModalStore>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),

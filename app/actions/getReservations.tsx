@@ -1,16 +1,17 @@
 import prisma from "@/app/libs/prismadb";
 
-interface IParmas {
+interface IParams {
   listingId?: string;
   userId?: string;
   authorId?: string;
 }
 
-const getReservations = async (params: IParmas) => {
+export default async function getReservations(params: IParams) {
   try {
     const { listingId, userId, authorId } = params;
 
     const query: any = {};
+
     if (listingId) {
       query.listingId = listingId;
     }
@@ -48,6 +49,4 @@ const getReservations = async (params: IParmas) => {
   } catch (error: any) {
     throw new Error(error);
   }
-};
-
-export default getReservations;
+}
