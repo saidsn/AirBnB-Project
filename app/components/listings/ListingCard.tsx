@@ -8,9 +8,8 @@ import { format } from "date-fns";
 import useCountries from "@/app/hooks/useCountries";
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
-import HeartButton from "../HeartButton";
+import HeartButton from "@/app/components/HeartButton";
 import Button from "../Button";
-import ClientOnly from "../ClientOnly";
 
 interface ListingCardProps {
   data: SafeListing;
